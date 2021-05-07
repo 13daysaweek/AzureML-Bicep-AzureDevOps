@@ -8,52 +8,31 @@ pr:
     - '*' # Don't ever run when a PR is created
 
 variables:
-- name: agentImageName
-  value: ubuntu-latest
 - name: workingDirectory
   value: $(System.DefaultWorkingDirectory)/infrastructure
 
 stages:
-- stage: DeployDevelopment
-  displayName: Deploy to Development
+- template: templates/deploy-template.yaml
   variables:
   - group: AzureML-Bicep-Deploy-Development
-  jobs:
-  - template: templates/deploy-template.yaml
-    parameters:
-      environment: aml-bicep-development
-
-- stage: DeployProduction
-  displayName: Deploy to Production
-  variables:
-  - group: AzureML-Bicep-Deploy-Production
-  jobs:
-  - template: templates/deploy-template.yaml
-    parameters:
-      environment: aml-bicep-Production
-
-# - stage: Development
-#   displayName: Deploy Infrastructure
-#   variables:
-#   - group: AzureML-Bicep-Deploy-Development
-#   jobs:
-#   - job: DeployInfra
-#     displayName: Deploy Bicep template
-#     pool:
-#       vmImage: $(agentImageName)
-    
-#     steps:
-#     - template: templates/deploy-template.yaml
-
-# - stage: Production
-#   displayName: Deploy Infrastructure
-#   variables:
-#   - group: AzureML-Bicep-Deploy-Production
-#   jobs:
-#   - job: DeployInfra
-#     displayName: Deploy Bicep template
-#     pool:
-#       vmImage: $(agentImageName)
-    
-#     steps:
-#     - template: templates/deploy-template.yaml
+  parameters:
+    serviceConnection: ${{ variables.serviceConnection }}
+    stageName: Deploy-Development
+    environment: aml-bicep-development
+    resourceGroupName: ${{ variables.resourceGroupName }}
+    workingDirectory: ${{ variables.workingDirectory }}
+    appInsightsName: ${{ variables.appInsightsName }}
+    computeInstanceName: ${{ variables.computeInstanceName }}
+    computeInstanceSku: ${{ variables.computeInstanceSku }}
+    containerRegistryName: ${{ variables.containerRegistryName }}
+    createMlCluster: ${{ variables.createMlCluster }}
+    createMlComputeInstance: ${{ variables.createMlComputeInstance }}
+    keyVaultAccessPolicyTargetObjectId: ${{ variables.keyVaultAccessPolicyTargetObjectId }}
+    keyVaultName: ${{ variables.keyVaultName }}
+    mlClusterMaxNodeCount: ${{ variables.mlClusterMaxNodeCount }}
+    mlClusterMinNodeCount: ${{ variables.mlClusterMinNodeCount }}
+    mlClusterName: ${{ variables.mlClusterName }}
+    mlClusterSku: ${{ variables.mlClusterSku }}
+    mlComputeAssignedUser: ${{ variables.mlComputeAssignedUser }}
+    mlWorkspaceName: ${{ variables.mlWorkspaceName }}
+    storageAccountName: ${{ variables.storageAccountName }}

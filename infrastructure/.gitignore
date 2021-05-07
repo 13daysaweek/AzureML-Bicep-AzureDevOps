@@ -1,0 +1,2 @@
+# Ignore JSON files since we're doing Bicep.  This lets me be lazy and do bicep build to view gen'd JSON and not have to worry about cleaning it up afterwards
+*.json

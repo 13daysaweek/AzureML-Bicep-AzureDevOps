@@ -2,8 +2,7 @@ trigger:
   branches:
     include:
     - main
-    exclude:
-    - refs/pull/*
+  pr: none
 
 variables:
 - group: AzureML-Bicep-Deploy

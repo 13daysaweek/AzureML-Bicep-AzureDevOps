@@ -14,10 +14,10 @@ variables:
 stages:
 - template: templates/deploy-template.yaml
   parameters:
-    serviceConnection: ${{ variables.serviceConnection }}
     stageName: Deploy-Development
     environment: aml-bicep-development
     variableGroupName: AzureML-Bicep-Deploy-Development
+    workingDirectory: ${{ variables.workingDirectory }}
     # resourceGroupName: ${{ variables.resourceGroupName }}
     # workingDirectory: ${{ variables.workingDirectory }}
     # appInsightsName: ${{ variables.appInsightsName }}

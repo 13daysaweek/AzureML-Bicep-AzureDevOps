@@ -19,9 +19,8 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      az --upgrade
       az bicep install
-      bicep build $(System.DefaultWorkingDirectory)/infrastructure/azureml.bicep
+      az bicep build $(System.DefaultWorkingDirectory)/infrastructure/azureml.bicep
 
 - task: PublishPipelineArtifact@1
   inputs:

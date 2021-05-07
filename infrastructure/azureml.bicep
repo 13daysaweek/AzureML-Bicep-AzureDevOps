@@ -1,4 +1,3 @@
-// Bicep template for deploying AML and associated resources
 @description('The AAD object id of a user that should be granted access to Key Vault contents')
 param keyVaultAccessPolicyTargetObjectId string
 

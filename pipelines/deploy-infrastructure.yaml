@@ -26,6 +26,6 @@ stages:
        scriptType: bash
        scriptLocation: inlineScript
        inlineScript: |
-         az --version # Let's find out what version this is actually using :D"
          DEPLOYMENT_NAME="aml-infra-deploy-$(date '+%F_%H_%M_%S')"
-         az deployment group create -g "$(resourceGroup)" -n "$DEPLOYMENT_NAME" --template-file "$(workingDirectory)/azureml.bicep" --parameters foo=bar
+         echo "Using deployment name $DEPLOYMENT_NAME"
+         az deployment group create -g "$(resourceGroupName)" -n "$DEPLOYMENT_NAME" --template-file "$(workingDirectory)/azureml.bicep" --parameters appInsightsName=$(appInsightsName) computeInstanceName=$(computeInstanceName) computeInstanceSku=$(computeInstanceSku) containerRegistryName=$(containerRegistryName) createMlCluster=$(createMlCluster) createMlComputeInstance=$(createMlComputeInstance) keyVaultAccessPolicyTargetObjectId=$(keyVaultAccessPolicyTargetObjectId) keyVaultName=$(keyVaultName) mlClusterMaxNodeCount=$(mlClusterMaxNodeCount) mlClusterMinNodeCount=$(mlClusterMinNodeCount) mlClusterName=$(mlClusterName) mlClusterSku=$(mlClusterSku) mlComputeAssignedUser=$(mlComputeAssignedUser) mlWorkspaceName=$(mlWorkspaceName) storageAccountName=$(storageAccountName)

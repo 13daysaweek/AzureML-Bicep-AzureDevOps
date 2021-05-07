@@ -22,9 +22,6 @@ param appInsightsName string
 @description('The name of the Azure Container Registry to create or update')
 param containerRegistryName string
 
-@description('The name of the Data Factory resource to create or update')
-param dataFactoryName string
-
 @description('Indicates whether or not the deployment should create an ML compute instance')
 param createMlComputeInstance bool
 

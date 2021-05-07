@@ -17,13 +17,12 @@ variables:
 stages:
 - stage: Development
   displayName: Deploy Infrastructure
-  environment: aml-bicep-development
   variables:
   - group: AzureML-Bicep-Deploy-Development
   jobs:
   - job: DeployInfra
     displayName: Deploy Bicep template
-
+    environment: aml-bicep-development
     pool:
       vmImage: $(agentImageName)
     
@@ -32,13 +31,12 @@ stages:
 
 - stage: Production
   displayName: Deploy Infrastructure
-  environment: aml-bicep-production
   variables:
   - group: AzureML-Bicep-Deploy-Production
   jobs:
   - job: DeployInfra
     displayName: Deploy Bicep template
-
+    environment: aml-bicep-production
     pool:
       vmImage: $(agentImageName)
     

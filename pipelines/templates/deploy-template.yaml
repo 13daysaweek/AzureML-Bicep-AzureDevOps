@@ -9,40 +9,6 @@ parameters:
   default: ''
 - name: serviceConnection
   default: ''  
-# - name: resourceGroupName
-#   default: ''
-# - name: appInsightsName
-#   default: ''
-# - name: computeInstanceName
-#   default: ''
-# - name: computeInstanceSku
-#   default: ''
-# - name: containerRegistryName
-#   default: ''
-# - name: createMlCluster
-#   default: false
-# - name: createMlComputeInstance
-#   default: false
-# - name: keyVaultAccessPolicyTargetObjectId
-#   default: ''
-# - name: keyVaultName
-#   default: ''
-# - name: mlClusterMaxNodeCount
-#   default: ''
-# - name: mlClusterMinNodeCount
-#   default: ''
-# - name: mlClusterName
-#   default: ''
-# - name: mlClusterSku
-#   default: ''
-# - name: mlComputeAssignedUser
-#   default: ''
-# - name: mlComputeAssignedUser
-#   default: ''
-# - name: mlWorkspaceName
-#   default: ''
-# - name: storageAccountName
-#   default: ''
 
 stages:
   - stage: ${{ parameters.stageName }}
@@ -61,7 +27,7 @@ stages:
           deploy:
             steps:
             - checkout: self
-            
+
             - task: AzureCLI@2
               displayName: 'az group deployment create'
               inputs:

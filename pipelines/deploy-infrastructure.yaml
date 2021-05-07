@@ -15,24 +15,33 @@ variables:
   value: $(System.DefaultWorkingDirectory)/infrastructure
 
 stages:
-- stage: Deploy
+- stage: Development
   displayName: Deploy Infrastructure
-  
+  environment: aml-bicep-development
+  variables:
+  - group: AzureML-Bicep-Deploy-Development
   jobs:
   - job: DeployInfra
     displayName: Deploy Bicep template
+
     pool:
       vmImage: $(agentImageName)
     
     steps:
     - template: templates/deploy-template.yaml
-    # - task: AzureCLI@2
-    #   displayName: 'az group deployment create'
-    #   inputs:
-    #    azureSubscription: $(serviceConnection)
-    #    scriptType: bash
-    #    scriptLocation: inlineScript
-    #    inlineScript: |
-    #      DEPLOYMENT_NAME="aml-infra-deploy-$(date '+%F_%H_%M_%S')"
-    #      echo "Using deployment name $DEPLOYMENT_NAME"
-    #      az deployment group create -g "$(resourceGroupName)" -n "$DEPLOYMENT_NAME" --template-file "$(workingDirectory)/azureml.bicep" --parameters appInsightsName=$(appInsightsName) computeInstanceName=$(computeInstanceName) computeInstanceSku=$(computeInstanceSku) containerRegistryName=$(containerRegistryName) createMlCluster=$(createMlCluster) createMlComputeInstance=$(createMlComputeInstance) keyVaultAccessPolicyTargetObjectId=$(keyVaultAccessPolicyTargetObjectId) keyVaultName=$(keyVaultName) mlClusterMaxNodeCount=$(mlClusterMaxNodeCount) mlClusterMinNodeCount=$(mlClusterMinNodeCount) mlClusterName=$(mlClusterName) mlClusterSku=$(mlClusterSku) mlComputeAssignedUser=$(mlComputeAssignedUser) mlWorkspaceName=$(mlWorkspaceName) storageAccountName=$(storageAccountName)
+
+- stage: Production
+  displayName: Deploy Infrastructure
+  environment: aml-bicep-production
+  variables:
+  - group: AzureML-Bicep-Deploy-Production
+  jobs:
+  - job: DeployInfra
+    displayName: Deploy Bicep template
+
+    pool:
+      vmImage: $(agentImageName)
+    
+    steps:
+    - template: templates/deploy-template.yaml
+

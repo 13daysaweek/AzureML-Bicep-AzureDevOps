@@ -18,6 +18,7 @@ stages:
     environment: aml-bicep-development
     variableGroupName: AzureML-Bicep-Deploy-Development
     workingDirectory: ${{ variables.workingDirectory }}
+    serviceConnection: AIRS
     # resourceGroupName: ${{ variables.resourceGroupName }}
     # workingDirectory: ${{ variables.workingDirectory }}
     # appInsightsName: ${{ variables.appInsightsName }}

@@ -6,6 +6,8 @@ parameters:
 - name: variableGroupName
   default: ''
 - name: workingDirectory
+  default: ''
+- name: serviceConnection
   default: ''  
 # - name: resourceGroupName
 #   default: ''
@@ -61,7 +63,7 @@ stages:
             - task: AzureCLI@2
               displayName: 'az group deployment create'
               inputs:
-                azureSubscription: $(serviceConnection)
+                azureSubscription: ${{ parameters.serviceConnection }}
                 scriptType: bash
                 scriptLocation: inlineScript
                 inlineScript: |

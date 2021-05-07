@@ -60,6 +60,8 @@ stages:
         runOnce:
           deploy:
             steps:
+            - checkout: self
+            
             - task: AzureCLI@2
               displayName: 'az group deployment create'
               inputs:

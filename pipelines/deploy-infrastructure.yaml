@@ -1,0 +1,30 @@
+trigger:
+- master
+
+variables:
+- group: AzureML-Bicep-Deploy
+- name: agentImageName
+  value: ubuntu-latest
+- name: workingDirectory
+  value: $(System.DefaultWorkingDirectory)/infrastructure
+
+stages:
+- stage: Deploy
+  displayName: Deploy Infrastructure
+  
+  jobs:
+  - job: DeployInfra
+    displayName: Deploy Bicep template
+    pool:
+      vmImage: $(agentImageName)
+    
+    steps:
+    - task: AzureCLI@2
+      displayName: 'az group deployment create'
+      inputs:
+       azureSubscription: $(serviceConnection)
+       scriptType: bash
+       inlineScript: |
+         az --version # Let's find out what version this is actually using :D"
+         DEPLOYMENT_NAME="aml-infra-deploy-$(date '+%F_%H_%M_%S')"
+         az deployment group create -g "$(resourceGroup)" -n "$DEPLOYMENT_NAME" --template-file "$(workingDirectory)/azureml.bicep" --parameters foo=bar

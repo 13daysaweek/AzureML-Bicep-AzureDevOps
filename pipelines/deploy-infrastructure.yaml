@@ -13,26 +13,25 @@ variables:
 
 stages:
 - template: templates/deploy-template.yaml
-  variables:
-  - group: AzureML-Bicep-Deploy-Development
   parameters:
     serviceConnection: ${{ variables.serviceConnection }}
     stageName: Deploy-Development
     environment: aml-bicep-development
-    resourceGroupName: ${{ variables.resourceGroupName }}
-    workingDirectory: ${{ variables.workingDirectory }}
-    appInsightsName: ${{ variables.appInsightsName }}
-    computeInstanceName: ${{ variables.computeInstanceName }}
-    computeInstanceSku: ${{ variables.computeInstanceSku }}
-    containerRegistryName: ${{ variables.containerRegistryName }}
-    createMlCluster: ${{ variables.createMlCluster }}
-    createMlComputeInstance: ${{ variables.createMlComputeInstance }}
-    keyVaultAccessPolicyTargetObjectId: ${{ variables.keyVaultAccessPolicyTargetObjectId }}
-    keyVaultName: ${{ variables.keyVaultName }}
-    mlClusterMaxNodeCount: ${{ variables.mlClusterMaxNodeCount }}
-    mlClusterMinNodeCount: ${{ variables.mlClusterMinNodeCount }}
-    mlClusterName: ${{ variables.mlClusterName }}
-    mlClusterSku: ${{ variables.mlClusterSku }}
-    mlComputeAssignedUser: ${{ variables.mlComputeAssignedUser }}
-    mlWorkspaceName: ${{ variables.mlWorkspaceName }}
-    storageAccountName: ${{ variables.storageAccountName }}
+    variableGroupName: AzureML-Bicep-Deploy-Development
+    # resourceGroupName: ${{ variables.resourceGroupName }}
+    # workingDirectory: ${{ variables.workingDirectory }}
+    # appInsightsName: ${{ variables.appInsightsName }}
+    # computeInstanceName: ${{ variables.computeInstanceName }}
+    # computeInstanceSku: ${{ variables.computeInstanceSku }}
+    # containerRegistryName: ${{ variables.containerRegistryName }}
+    # createMlCluster: ${{ variables.createMlCluster }}
+    # createMlComputeInstance: ${{ variables.createMlComputeInstance }}
+    # keyVaultAccessPolicyTargetObjectId: ${{ variables.keyVaultAccessPolicyTargetObjectId }}
+    # keyVaultName: ${{ variables.keyVaultName }}
+    # mlClusterMaxNodeCount: ${{ variables.mlClusterMaxNodeCount }}
+    # mlClusterMinNodeCount: ${{ variables.mlClusterMinNodeCount }}
+    # mlClusterName: ${{ variables.mlClusterName }}
+    # mlClusterSku: ${{ variables.mlClusterSku }}
+    # mlComputeAssignedUser: ${{ variables.mlComputeAssignedUser }}
+    # mlWorkspaceName: ${{ variables.mlWorkspaceName }}
+    # storageAccountName: ${{ variables.storageAccountName }}

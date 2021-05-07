@@ -1,0 +1,30 @@
+trigger:
+  branches:
+    include:
+    - main # Only run on changes to main
+
+pr:
+  branches:
+    exclude:
+    - '*' # Don't ever run when a PR is created
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: AzureCLI@2
+  displayName: Build Bicep template
+  inputs:
+    azureSubscription: AIRS
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az --upgrade
+      az bicep install
+      bicep build $(System.DefaultWorkingDirectory)/infrastructure/azureml.bicep
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: Infrastructure
+    artifact: Infrastructure
+    publishLocation: pipeline

@@ -24,6 +24,7 @@ stages:
       inputs:
        azureSubscription: $(serviceConnection)
        scriptType: bash
+       scriptLocation: inlineScript
        inlineScript: |
          az --version # Let's find out what version this is actually using :D"
          DEPLOYMENT_NAME="aml-infra-deploy-$(date '+%F_%H_%M_%S')"

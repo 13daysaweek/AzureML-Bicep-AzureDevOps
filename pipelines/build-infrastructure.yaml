@@ -24,6 +24,6 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    targetPath: Infrastructure
-    artifact: Infrastructure
+    targetPath: infrastructure
+    artifact: infrastructure
     publishLocation: pipeline

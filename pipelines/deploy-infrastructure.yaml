@@ -15,31 +15,46 @@ variables:
   value: $(System.DefaultWorkingDirectory)/infrastructure
 
 stages:
-- stage: Development
-  displayName: Deploy Infrastructure
+- stage: DeployDevelopment
+  displayName: Deploy to Development
   variables:
   - group: AzureML-Bicep-Deploy-Development
   jobs:
-  - job: DeployInfra
-    displayName: Deploy Bicep template
-    environment: aml-bicep-development
-    pool:
-      vmImage: $(agentImageName)
-    
-    steps:
-    - template: templates/deploy-template.yaml
+  - template: templates/deploy-template.yaml
+    parameters:
+      environment: aml-bicep-development
 
-- stage: Production
-  displayName: Deploy Infrastructure
+- stage: DeployProduction
+  displayName: Deploy to Production
   variables:
   - group: AzureML-Bicep-Deploy-Production
   jobs:
-  - job: DeployInfra
-    displayName: Deploy Bicep template
-    environment: aml-bicep-production
-    pool:
-      vmImage: $(agentImageName)
-    
-    steps:
-    - template: templates/deploy-template.yaml
+  - template: templates/deploy-template.yaml
+    parameters:
+      environment: aml-bicep-Production
 
+# - stage: Development
+#   displayName: Deploy Infrastructure
+#   variables:
+#   - group: AzureML-Bicep-Deploy-Development
+#   jobs:
+#   - job: DeployInfra
+#     displayName: Deploy Bicep template
+#     pool:
+#       vmImage: $(agentImageName)
+    
+#     steps:
+#     - template: templates/deploy-template.yaml
+
+# - stage: Production
+#   displayName: Deploy Infrastructure
+#   variables:
+#   - group: AzureML-Bicep-Deploy-Production
+#   jobs:
+#   - job: DeployInfra
+#     displayName: Deploy Bicep template
+#     pool:
+#       vmImage: $(agentImageName)
+    
+#     steps:
+#     - template: templates/deploy-template.yaml

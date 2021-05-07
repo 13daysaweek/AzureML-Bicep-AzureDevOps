@@ -19,20 +19,11 @@ stages:
     variableGroupName: AzureML-Bicep-Deploy-Development
     workingDirectory: ${{ variables.workingDirectory }}
     serviceConnection: AIRS
-    # resourceGroupName: ${{ variables.resourceGroupName }}
-    # workingDirectory: ${{ variables.workingDirectory }}
-    # appInsightsName: ${{ variables.appInsightsName }}
-    # computeInstanceName: ${{ variables.computeInstanceName }}
-    # computeInstanceSku: ${{ variables.computeInstanceSku }}
-    # containerRegistryName: ${{ variables.containerRegistryName }}
-    # createMlCluster: ${{ variables.createMlCluster }}
-    # createMlComputeInstance: ${{ variables.createMlComputeInstance }}
-    # keyVaultAccessPolicyTargetObjectId: ${{ variables.keyVaultAccessPolicyTargetObjectId }}
-    # keyVaultName: ${{ variables.keyVaultName }}
-    # mlClusterMaxNodeCount: ${{ variables.mlClusterMaxNodeCount }}
-    # mlClusterMinNodeCount: ${{ variables.mlClusterMinNodeCount }}
-    # mlClusterName: ${{ variables.mlClusterName }}
-    # mlClusterSku: ${{ variables.mlClusterSku }}
-    # mlComputeAssignedUser: ${{ variables.mlComputeAssignedUser }}
-    # mlWorkspaceName: ${{ variables.mlWorkspaceName }}
-    # storageAccountName: ${{ variables.storageAccountName }}
+
+- template: templates/deploy-template.yaml
+  parameters:
+    stageName: DeployProduction
+    environment: aml-bicep-production
+    variableGroupName: AzureML-Bicep-Deploy-Production
+    workingDirectory: ${{ variables.workingDirectory }}
+    serviceConnection: MSDN

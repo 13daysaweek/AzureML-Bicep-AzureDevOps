@@ -1,11 +1,11 @@
 trigger:
   branches:
     include:
-    - main
+    - main  # Only run on changes to main
 pr:
   branches:
     exclude:
-    - '*'
+    - '*' # Don't ever run when a PR is created
 
 variables:
 - group: AzureML-Bicep-Deploy
@@ -25,13 +25,14 @@ stages:
       vmImage: $(agentImageName)
     
     steps:
-    - task: AzureCLI@2
-      displayName: 'az group deployment create'
-      inputs:
-       azureSubscription: $(serviceConnection)
-       scriptType: bash
-       scriptLocation: inlineScript
-       inlineScript: |
-         DEPLOYMENT_NAME="aml-infra-deploy-$(date '+%F_%H_%M_%S')"
-         echo "Using deployment name $DEPLOYMENT_NAME"
-         az deployment group create -g "$(resourceGroupName)" -n "$DEPLOYMENT_NAME" --template-file "$(workingDirectory)/azureml.bicep" --parameters appInsightsName=$(appInsightsName) computeInstanceName=$(computeInstanceName) computeInstanceSku=$(computeInstanceSku) containerRegistryName=$(containerRegistryName) createMlCluster=$(createMlCluster) createMlComputeInstance=$(createMlComputeInstance) keyVaultAccessPolicyTargetObjectId=$(keyVaultAccessPolicyTargetObjectId) keyVaultName=$(keyVaultName) mlClusterMaxNodeCount=$(mlClusterMaxNodeCount) mlClusterMinNodeCount=$(mlClusterMinNodeCount) mlClusterName=$(mlClusterName) mlClusterSku=$(mlClusterSku) mlComputeAssignedUser=$(mlComputeAssignedUser) mlWorkspaceName=$(mlWorkspaceName) storageAccountName=$(storageAccountName)
+    - template: templates/deploy-template.yaml
+    # - task: AzureCLI@2
+    #   displayName: 'az group deployment create'
+    #   inputs:
+    #    azureSubscription: $(serviceConnection)
+    #    scriptType: bash
+    #    scriptLocation: inlineScript
+    #    inlineScript: |
+    #      DEPLOYMENT_NAME="aml-infra-deploy-$(date '+%F_%H_%M_%S')"
+    #      echo "Using deployment name $DEPLOYMENT_NAME"
+    #      az deployment group create -g "$(resourceGroupName)" -n "$DEPLOYMENT_NAME" --template-file "$(workingDirectory)/azureml.bicep" --parameters appInsightsName=$(appInsightsName) computeInstanceName=$(computeInstanceName) computeInstanceSku=$(computeInstanceSku) containerRegistryName=$(containerRegistryName) createMlCluster=$(createMlCluster) createMlComputeInstance=$(createMlComputeInstance) keyVaultAccessPolicyTargetObjectId=$(keyVaultAccessPolicyTargetObjectId) keyVaultName=$(keyVaultName) mlClusterMaxNodeCount=$(mlClusterMaxNodeCount) mlClusterMinNodeCount=$(mlClusterMinNodeCount) mlClusterName=$(mlClusterName) mlClusterSku=$(mlClusterSku) mlComputeAssignedUser=$(mlComputeAssignedUser) mlWorkspaceName=$(mlWorkspaceName) storageAccountName=$(storageAccountName)

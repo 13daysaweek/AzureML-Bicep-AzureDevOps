@@ -20,7 +20,7 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       az bicep install
-      az bicep build $(System.DefaultWorkingDirectory)/infrastructure/azureml.bicep
+      az bicep build --file $(System.DefaultWorkingDirectory)/infrastructure/azureml.bicep
 
 - task: PublishPipelineArtifact@1
   inputs:

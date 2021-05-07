@@ -14,7 +14,7 @@ variables:
 stages:
 - template: templates/deploy-template.yaml
   parameters:
-    stageName: Deploy-Development
+    stageName: DeployDevelopment
     environment: aml-bicep-development
     variableGroupName: AzureML-Bicep-Deploy-Development
     workingDirectory: ${{ variables.workingDirectory }}

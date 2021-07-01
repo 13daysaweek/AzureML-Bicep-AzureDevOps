@@ -1,0 +1,52 @@
+trigger: none
+
+pr:
+  branches:
+    exclude:
+    - '*'
+
+resources:
+    pipelines:
+    - pipeline: build
+      source: AzureML-Bicep-Build
+
+variables:
+- name: workingDirectory
+  value: $(System.DefaultWorkingDirectory)/infrastructure
+
+stages:
+- stage: BuildInfra
+  jobs:
+  - job: Build
+    steps:
+    - task: AzureCLI@2
+      displayName: Build Bicep template
+      inputs:
+        azureSubscription: AIRS
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az bicep install
+          az bicep build --file $(System.DefaultWorkingDirectory)/infrastructure/azureml.bicep        
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: infrastructure
+        artifact: infrastructure
+        publishLocation: pipeline
+
+- template: templates/unified-deploy-template.yaml
+  parameters:
+    stageName: DeployDevelopment
+    environment: aml-bicep-development
+    variableGroupName: AzureML-Bicep-Deploy-Development
+    workingDirectory: ${{ variables.workingDirectory }}
+    serviceConnection: AIRS
+
+- template: templates/unified-deploy-template.yaml
+  parameters:
+    stageName: DeployProduction
+    environment: aml-bicep-production
+    variableGroupName: AzureML-Bicep-Deploy-Production
+    workingDirectory: ${{ variables.workingDirectory }}
+    serviceConnection: MSDN

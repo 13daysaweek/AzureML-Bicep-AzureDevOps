@@ -1,14 +1,12 @@
-trigger: none
+trigger:
+  branches:
+    include:
+    - main # Only run on changes to main
 
 pr:
   branches:
     exclude:
-    - '*'
-
-resources:
-    pipelines:
-    - pipeline: build
-      source: AzureML-Bicep-Build
+    - '*' # Don't ever run when a PR is created
 
 variables:
 - name: workingDirectory

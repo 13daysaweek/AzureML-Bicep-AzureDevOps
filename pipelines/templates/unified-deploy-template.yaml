@@ -28,7 +28,7 @@ stages:
             steps:
             - download: current
               artifact: infrastructure
-              
+
             - task: AzureCLI@2
               displayName: 'az group deployment create'
               inputs:
@@ -38,4 +38,5 @@ stages:
                 inlineScript: |
                   DEPLOYMENT_NAME="aml-infra-deploy-$(date '+%F_%H_%M_%S')"
                   echo "Using deployment name $DEPLOYMENT_NAME"
-                  az deployment group create -g "$(resourceGroupName)" -n "$DEPLOYMENT_NAME" --template-file "$(Pipeline.Workspace)/build/infrastructure/azureml.bicep" --parameters appInsightsName=$(appInsightsName) computeInstanceName=$(computeInstanceName) computeInstanceSku=$(computeInstanceSku) containerRegistryName=$(containerRegistryName) createMlCluster=$(createMlCluster) createMlComputeInstance=$(createMlComputeInstance) keyVaultAccessPolicyTargetObjectId=$(keyVaultAccessPolicyTargetObjectId) keyVaultName=$(keyVaultName) mlClusterMaxNodeCount=$(mlClusterMaxNodeCount) mlClusterMinNodeCount=$(mlClusterMinNodeCount) mlClusterName=$(mlClusterName) mlClusterSku=$(mlClusterSku) mlComputeAssignedUser=$(mlComputeAssignedUser) mlWorkspaceName=$(mlWorkspaceName) storageAccountName=$(storageAccountName)            
+                  ls -al $(Pipeline.Workspace)
+                  az deployment group create -g "$(resourceGroupName)" -n "$DEPLOYMENT_NAME" --template-file "$(Pipeline.Workspace)/infrastructure/azureml.bicep" --parameters appInsightsName=$(appInsightsName) computeInstanceName=$(computeInstanceName) computeInstanceSku=$(computeInstanceSku) containerRegistryName=$(containerRegistryName) createMlCluster=$(createMlCluster) createMlComputeInstance=$(createMlComputeInstance) keyVaultAccessPolicyTargetObjectId=$(keyVaultAccessPolicyTargetObjectId) keyVaultName=$(keyVaultName) mlClusterMaxNodeCount=$(mlClusterMaxNodeCount) mlClusterMinNodeCount=$(mlClusterMinNodeCount) mlClusterName=$(mlClusterName) mlClusterSku=$(mlClusterSku) mlComputeAssignedUser=$(mlComputeAssignedUser) mlWorkspaceName=$(mlWorkspaceName) storageAccountName=$(storageAccountName)            

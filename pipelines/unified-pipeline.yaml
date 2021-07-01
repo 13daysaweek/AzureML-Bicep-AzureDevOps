@@ -1,0 +1,32 @@
+trigger: none
+
+pr:
+  branches:
+    exclude:
+    - '*'
+
+resources:
+    pipelines:
+    - pipeline: build
+      source: AzureML-Bicep-Build
+
+variables:
+- name: workingDirectory
+  value: $(System.DefaultWorkingDirectory)/infrastructure
+
+stages:
+- template: templates/deploy-template.yaml
+  parameters:
+    stageName: DeployDevelopment
+    environment: aml-bicep-development
+    variableGroupName: AzureML-Bicep-Deploy-Development
+    workingDirectory: ${{ variables.workingDirectory }}
+    serviceConnection: AIRS
+
+- template: templates/deploy-template.yaml
+  parameters:
+    stageName: DeployProduction
+    environment: aml-bicep-production
+    variableGroupName: AzureML-Bicep-Deploy-Production
+    workingDirectory: ${{ variables.workingDirectory }}
+    serviceConnection: MSDN

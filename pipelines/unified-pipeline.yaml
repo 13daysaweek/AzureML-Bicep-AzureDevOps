@@ -15,7 +15,27 @@ variables:
   value: $(System.DefaultWorkingDirectory)/infrastructure
 
 stages:
-- template: templates/deploy-template.yaml
+- stage: BuildInfra
+  jobs:
+  - job: Build
+    steps:
+    - task: AzureCLI@2
+      displayName: Build Bicep template
+      inputs:
+        azureSubscription: AIRS
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az bicep install
+          az bicep build --file $(System.DefaultWorkingDirectory)/infrastructure/azureml.bicep        
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: infrastructure
+        artifact: infrastructure
+        publishLocation: pipeline
+
+- template: templates/unified-deploy-template.yaml
   parameters:
     stageName: DeployDevelopment
     environment: aml-bicep-development
@@ -23,7 +43,7 @@ stages:
     workingDirectory: ${{ variables.workingDirectory }}
     serviceConnection: AIRS
 
-- template: templates/deploy-template.yaml
+- template: templates/unified-deploy-template.yaml
   parameters:
     stageName: DeployProduction
     environment: aml-bicep-production
